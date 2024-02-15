@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álbum de Figurinhas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .possui {
+      background-color: #c2f0c2; /* verde para figurinhas possuídas */
+    }
+
+    .precisa {
+      background-color: #ffd6cc; /* vermelho para figurinhas necessárias */
+    }
+  </style>
+</head>
+<body>
+  <h1>Meu Álbum de Figurinhas</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Figurinha</th>
+        <th>Seleção</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Figurinha A</td>
+        <td><input type="checkbox" class="figurinhaCheckbox" data-numero="1"></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Figurinha B</td>
+        <td><input type="checkbox" class="figurinhaCheckbox" data-numero="2"></td>
+      </tr>
+      <!-- Adicione mais linhas conforme necessário -->
+
+    </tbody>
+  </table>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const checkboxes = document.querySelectorAll('.figurinhaCheckbox');
+
+      checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+          const numero = this.getAttribute('data-numero');
+          const row = this.closest('tr');
+
+          if (this.checked) {
+            row.classList.add('possui');
+          } else {
+            row.classList.remove('possui');
+          }
+        });
+      });
+    });
+  </script>
+  <title>Seleção de Números</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 8px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seleção de Números</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Seleção</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><input type="checkbox" class="numeroCheckbox" data-numero="1"></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><input type="checkbox" class="numeroCheckbox" data-numero="2"></td>
+      </tr>
+      <tr>
+        <td>A1</td>
+        <td><input type="checkbox" class="numeroCheckbox" data-numero="A1"></td>
+      </tr>
+      <tr>
+        <td>B2</td>
+        <td><input type="checkbox" class="numeroCheckbox" data-numero="B2"></td>
+      </tr>
+      <!-- Adicione mais linhas conforme necessário -->
+    </tbody>
+  </table>
+
+  <button onclick="salvarSelecao()">Salvar Seleção</button>
+  <button onclick="exportarCSV()">Exportar CSV</button>
+
+  <script>
+    function salvarSelecao() {
+      const checkboxes = document.querySelectorAll('.numeroCheckbox');
+      checkboxes.forEach(function(checkbox) {
+        const numero = checkbox.getAttribute('data-numero');
+        const isChecked = checkbox.checked;
+
+        // Aqui você pode salvar os dados conforme necessário
+        console.log(`Número: ${numero}, Selecionado: ${isChecked}`);
+      });
+    }
+
+    function exportarCSV() {
+      const checkboxes = document.querySelectorAll('.numeroCheckbox');
+      const csvContent = "Número,Seleção\n";
+
+      checkboxes.forEach(function(checkbox) {
+        const numero = checkbox.getAttribute('data-numero');
+        const isChecked = checkbox.checked;
+
+        // Adiciona linha ao conteúdo CSV
+        csvContent += `${numero},${isChecked ? 'Selecionado' : 'Não Selecionado'}\n`;
+      });
+
+      // Cria um arquivo CSV e força o download
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'selecao_numeros.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
